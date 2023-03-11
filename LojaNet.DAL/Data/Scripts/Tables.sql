@@ -1,6 +1,6 @@
 USE [LojaNet]
 GO
-/****** Object:  Table [dbo].[PedidoItems]    Script Date: 11/03/2023 17:11:25 ******/
+/****** Object:  Table [dbo].[PedidoItems]    Script Date: 11/03/2023 17:29:39 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,7 +16,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Pedidos]    Script Date: 11/03/2023 17:11:25 ******/
+/****** Object:  Table [dbo].[Pedidos]    Script Date: 11/03/2023 17:29:39 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -30,7 +30,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Produtos]    Script Date: 11/03/2023 17:11:25 ******/
+/****** Object:  Table [dbo].[Produtos]    Script Date: 11/03/2023 17:29:39 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -39,13 +39,14 @@ CREATE TABLE [dbo].[Produtos](
 	[Id] [varchar](50) NOT NULL,
 	[Preco] [decimal](20, 2) NULL,
 	[Quantidade] [int] NULL,
+	[Nome] [varchar](100) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Usuarios]    Script Date: 11/03/2023 17:11:25 ******/
+/****** Object:  Table [dbo].[Usuarios]    Script Date: 11/03/2023 17:29:39 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
