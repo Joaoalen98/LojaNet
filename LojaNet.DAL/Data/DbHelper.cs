@@ -6,7 +6,7 @@ namespace LojaNet.DAL.Data
 {
     public static class DbHelper
     {
-        private static readonly string Conexao = "server=LAPTOP-MLO9QO6J\\SQLEXPRESS;database=LojaNet;integrated security=true;trust server certificate=true;";
+        public static readonly string Conexao = "server=LAPTOP-MLO9QO6J\\SQLEXPRESS;database=LojaNet;integrated security=true;trust server certificate=true;";
     
         private static SqlConnection GetDbConection()
         {
