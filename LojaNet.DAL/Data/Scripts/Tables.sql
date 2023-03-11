@@ -1,0 +1,77 @@
+USE [LojaNet]
+GO
+/****** Object:  Table [dbo].[PedidoItems]    Script Date: 11/03/2023 17:11:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PedidoItems](
+	[Id] [varchar](50) NOT NULL,
+	[Preco] [decimal](20, 2) NULL,
+	[ProdutoId] [varchar](50) NULL,
+	[PedidoId] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Pedidos]    Script Date: 11/03/2023 17:11:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Pedidos](
+	[Id] [varchar](50) NOT NULL,
+	[UsuarioId] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Produtos]    Script Date: 11/03/2023 17:11:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Produtos](
+	[Id] [varchar](50) NOT NULL,
+	[Preco] [decimal](20, 2) NULL,
+	[Quantidade] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Usuarios]    Script Date: 11/03/2023 17:11:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Usuarios](
+	[Id] [varchar](50) NOT NULL,
+	[Nome] [varchar](100) NULL,
+	[Email] [varchar](100) NULL,
+	[Telefone] [varchar](100) NULL,
+	[Senha] [varchar](100) NULL,
+	[Role] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[PedidoItems]  WITH CHECK ADD FOREIGN KEY([PedidoId])
+REFERENCES [dbo].[Pedidos] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[PedidoItems]  WITH CHECK ADD FOREIGN KEY([ProdutoId])
+REFERENCES [dbo].[Produtos] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Pedidos]  WITH CHECK ADD FOREIGN KEY([UsuarioId])
+REFERENCES [dbo].[Usuarios] ([Id])
+ON DELETE CASCADE
+GO

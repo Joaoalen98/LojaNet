@@ -15,4 +15,11 @@
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LojaNet.API\LojaNet.API.csproj" />
+    <ProjectReference Include="..\LojaNet.BLL\LojaNet.BLL.csproj" />
+    <ProjectReference Include="..\LojaNet.DAL\LojaNet.DAL.csproj" />
+    <ProjectReference Include="..\LojaNet.Models\LojaNet.Models.csproj" />
+  </ItemGroup>
+
 </Project>

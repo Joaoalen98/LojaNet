@@ -1,4 +1,5 @@
-﻿using LojaNet.Models.Entidades;
+﻿using LojaNet.DAL.Data;
+using LojaNet.Models.Entidades;
 using LojaNet.Models.Interfaces;
 
 namespace LojaNet.DAL
@@ -7,22 +8,22 @@ namespace LojaNet.DAL
     {
         public int Alterar(Usuario entidade)
         {
-            throw new NotImplementedException();
+            return DbHelper.ExecutarComando("UsuarioAlterar", entidade);
         }
 
         public int Criar(Usuario entidade)
         {
-            throw new NotImplementedException();
+            return DbHelper.ExecutarComando("UsuarioCriar", entidade);
         }
 
         public int Deletar(string id)
         {
-            throw new NotImplementedException();
+            return DbHelper.ExecutarComando("UsuarioDeletar", new { Id = id });
         }
 
         public Usuario ObterPorId(string id)
         {
-            throw new NotImplementedException();
+            return DbHelper.GetEntidade<Usuario>("UsuarioObterPorId", new { Id = id });
         }
     }
 }

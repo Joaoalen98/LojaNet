@@ -15,4 +15,8 @@
     <ProjectReference Include="..\LojaNet.Models\LojaNet.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Scripts\" />
+  </ItemGroup>
+
 </Project>
