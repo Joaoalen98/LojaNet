@@ -1,4 +1,5 @@
 ﻿using LojaNet.DAL;
+using LojaNet.Helpers;
 using LojaNet.Models.Entidades;
 using LojaNet.Models.Enums;
 
@@ -8,14 +9,14 @@ namespace LojaNet.Test
     public class UsuarioDALTest
     {
         private readonly UsuarioDAL _usuarioDAL = new();
-
+        private static readonly string _usuarioMockSenha = "SenhaTeste";
         private readonly Usuario _usuarioMock = new()
         {
             Id = "IdTeste",
             Email = "email@email.com",
             Nome = "Nome Teste",
             Role = RoleEnum.Cliente,
-            Senha = "SenhaTeste",
+            Senha = HashHelper.HashSenha(_usuarioMockSenha),
             Telefone = "11955554444"
         };
 
@@ -60,6 +61,16 @@ namespace LojaNet.Test
             if (del == 0)
             {
                 Assert.Fail("O numero de linhas afetadas foi zero");
+            }
+        }
+
+        [TestMethod]
+        public void ObterPorEmailTest()
+        {
+            var usuario = _usuarioDAL.ObterPorEmail(_usuarioMock.Email);
+            if (usuario != null)
+            {
+                Console.WriteLine($"Nome: {usuario.Nome} - Email: {usuario.Email}");
             }
         }
     }

@@ -11,6 +11,11 @@ namespace LojaNet.DAL
             return DbHelper.ExecutarComando("UsuarioAlterar", entidade);
         }
 
+        public Usuario ObterPorEmailSenha(string email, string senha)
+        {
+            throw new NotImplementedException();
+        }
+
         public int Criar(Usuario entidade)
         {
             return DbHelper.ExecutarComando("UsuarioCriar", entidade);
@@ -19,6 +24,11 @@ namespace LojaNet.DAL
         public int Deletar(string id)
         {
             return DbHelper.ExecutarComando("UsuarioDeletar", new { Id = id });
+        }
+
+        public Usuario ObterPorEmail(string email)
+        {
+            return DbHelper.GetEntidade<Usuario>("UsuarioObterPorEmail", new { Email = email });
         }
 
         public Usuario ObterPorId(string id)
