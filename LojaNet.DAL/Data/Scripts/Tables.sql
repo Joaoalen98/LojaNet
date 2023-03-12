@@ -1,6 +1,6 @@
 USE [LojaNet]
 GO
-/****** Object:  Table [dbo].[PedidoItems]    Script Date: 11/03/2023 19:25:20 ******/
+/****** Object:  Table [dbo].[PedidoItems]    Script Date: 11/03/2023 23:45:14 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,7 +16,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Pedidos]    Script Date: 11/03/2023 19:25:20 ******/
+/****** Object:  Table [dbo].[Pedidos]    Script Date: 11/03/2023 23:45:14 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -24,13 +24,14 @@ GO
 CREATE TABLE [dbo].[Pedidos](
 	[Id] [varchar](50) NOT NULL,
 	[UsuarioId] [varchar](50) NULL,
+	[DataPedido] [datetime] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Produtos]    Script Date: 11/03/2023 19:25:20 ******/
+/****** Object:  Table [dbo].[Produtos]    Script Date: 11/03/2023 23:45:14 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -46,7 +47,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Usuarios]    Script Date: 11/03/2023 19:25:20 ******/
+/****** Object:  Table [dbo].[Usuarios]    Script Date: 11/03/2023 23:45:14 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -63,6 +64,8 @@ PRIMARY KEY CLUSTERED
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Pedidos] ADD  DEFAULT (getdate()) FOR [DataPedido]
 GO
 ALTER TABLE [dbo].[PedidoItems]  WITH CHECK ADD FOREIGN KEY([PedidoId])
 REFERENCES [dbo].[Pedidos] ([Id])

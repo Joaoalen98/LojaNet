@@ -1,6 +1,6 @@
 USE [LojaNet]
 GO
-/****** Object:  StoredProcedure [dbo].[PedidoAlterar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[PedidoAlterar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -8,25 +8,27 @@ GO
 CREATE procedure [dbo].[PedidoAlterar]
 (
 	@Id varchar(50),
+	@DataPedido datetime,
 	@UsuarioId varchar(50)
 ) as
-update Pedidos set Id = @Id, UsuarioId = @UsuarioId
+update Pedidos set Id = @Id, DataPedido = @DataPedido, UsuarioId = @UsuarioId
 where Id = @Id;
 GO
-/****** Object:  StoredProcedure [dbo].[PedidoCriar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[PedidoCriar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure [dbo].[PedidoCriar]
+CREATE procedure [dbo].[PedidoCriar]
 (
 	@Id varchar(50),
+	@DataPedido datetime,
 	@UsuarioId varchar(50)
 ) as
-insert into Pedidos (Id, UsuarioId)
-values (@Id, @UsuarioId);
+insert into Pedidos (Id, DataPedido, UsuarioId)
+values (@Id, @DataPedido, @UsuarioId);
 GO
-/****** Object:  StoredProcedure [dbo].[PedidoDeletar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[PedidoDeletar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -37,7 +39,7 @@ create procedure [dbo].[PedidoDeletar]
 ) as
 delete from Pedidos where Id = @Id;
 GO
-/****** Object:  StoredProcedure [dbo].[PedidoItemAlterar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[PedidoItemAlterar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -51,7 +53,7 @@ create procedure [dbo].[PedidoItemAlterar]
 ) as
 update PedidoItems set Id = @Id, Preco = @Preco, ProdutoId = @ProdutoId, PedidoId = @PedidoId;
 GO
-/****** Object:  StoredProcedure [dbo].[PedidoItemCriar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[PedidoItemCriar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -66,7 +68,7 @@ create procedure [dbo].[PedidoItemCriar]
 insert into PedidoItems (Id, Preco, ProdutoId, PedidoId)
 values (@Id, @Preco, @ProdutoId, @PedidoId);
 GO
-/****** Object:  StoredProcedure [dbo].[PedidoItemObterPorId]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[PedidoItemObterPorId]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -78,7 +80,7 @@ create procedure [dbo].[PedidoItemObterPorId]
 select Id, Preco, ProdutoId, PedidoId from PedidoItems 
 where Id = @Id;
 GO
-/****** Object:  StoredProcedure [dbo].[PedidoItemObterPorPedido]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[PedidoItemObterPorPedido]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -90,31 +92,31 @@ create procedure [dbo].[PedidoItemObterPorPedido]
 select Id, Preco, ProdutoId, PedidoId from PedidoItems 
 where PedidoId = @PedidoId;
 GO
-/****** Object:  StoredProcedure [dbo].[PedidoObterPorid]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[PedidoObterPorid]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure [dbo].[PedidoObterPorid]
+CREATE procedure [dbo].[PedidoObterPorid]
 (
 	@Id varchar(50)
 ) as
-select Id, UsuarioId from Pedidos
+select Id, DataPedido, UsuarioId from Pedidos
 where Id = @Id;
 GO
-/****** Object:  StoredProcedure [dbo].[PedidoObterTodos]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[PedidoObterTodos]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure [dbo].[PedidoObterTodos]
+CREATE procedure [dbo].[PedidoObterTodos]
 (
 	@UsuarioId varchar(50)
 ) as
-select Id, UsuarioId from Pedidos
+select Id, DataPedido, UsuarioId from Pedidos
 where UsuarioId = @UsuarioId;
 GO
-/****** Object:  StoredProcedure [dbo].[ProdutoAlterar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[ProdutoAlterar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,7 +135,7 @@ update Produtos set
 	Quantidade = @Quantidade
 	where Id = @Id;
 GO
-/****** Object:  StoredProcedure [dbo].[ProdutoCriar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[ProdutoCriar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -148,7 +150,7 @@ create procedure [dbo].[ProdutoCriar]
 insert into Produtos (Id, Nome, Preco, Quantidade)
 values (@Id, @Nome, @Preco, @Quantidade);
 GO
-/****** Object:  StoredProcedure [dbo].[ProdutoDeletar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[ProdutoDeletar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -160,7 +162,7 @@ create procedure [dbo].[ProdutoDeletar]
 delete from Produtos 
 	where Id = @Id
 GO
-/****** Object:  StoredProcedure [dbo].[ProdutoObterPorId]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[ProdutoObterPorId]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -172,7 +174,7 @@ create procedure [dbo].[ProdutoObterPorId]
 select Id, Nome, Preco, Quantidade from Produtos
 where Id = @Id;
 GO
-/****** Object:  StoredProcedure [dbo].[ProdutoObterTodos]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[ProdutoObterTodos]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -181,7 +183,7 @@ create procedure [dbo].[ProdutoObterTodos]
 as
 select Id, Nome, Preco, Quantidade from Produtos;
 GO
-/****** Object:  StoredProcedure [dbo].[UsuarioAlterar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[UsuarioAlterar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -206,7 +208,7 @@ update Usuarios set
 	Role = @Role
 	where Id = @Id;
 GO
-/****** Object:  StoredProcedure [dbo].[UsuarioCriar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[UsuarioCriar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -222,7 +224,7 @@ create procedure [dbo].[UsuarioCriar](
 insert into Usuarios (Id, Nome, Email, Telefone, Senha, Role)
 values (@Id, @Nome, @Email, @Telefone, @Senha, @Role);
 GO
-/****** Object:  StoredProcedure [dbo].[UsuarioDeletar]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[UsuarioDeletar]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -232,7 +234,7 @@ create procedure [dbo].[UsuarioDeletar](
 ) as
 delete from Usuarios where Id = @Id;
 GO
-/****** Object:  StoredProcedure [dbo].[UsuarioObterPorEmail]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[UsuarioObterPorEmail]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,7 +245,7 @@ create procedure [dbo].[UsuarioObterPorEmail]
 ) as 
 select Id, Email, Nome, Telefone, Senha, [Role] from Usuarios where Email = @Email;
 GO
-/****** Object:  StoredProcedure [dbo].[UsuarioObterPorId]    Script Date: 11/03/2023 20:01:04 ******/
+/****** Object:  StoredProcedure [dbo].[UsuarioObterPorId]    Script Date: 11/03/2023 23:45:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
