@@ -25,6 +25,7 @@ namespace LojaNet.DAL
                 var cmdPedido = new SqlCommand(@"PedidoCriar", conn);
                 cmdPedido.CommandType = CommandType.StoredProcedure;
                 cmdPedido.Parameters.AddWithValue("@Id", entidade.Id);
+                cmdPedido.Parameters.AddWithValue("@DataPedido", entidade.DataPedido);
                 cmdPedido.Parameters.AddWithValue("@UsuarioId", entidade.UsuarioId);
 
                 cmdPedido.Transaction = txn;
