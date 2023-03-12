@@ -29,6 +29,7 @@ namespace LojaNet.API
                     new(ClaimTypes.Email, usuario.Email),
                     new(ClaimTypes.OtherPhone, usuario.Telefone),
                     new("Id", usuario.Id),
+                    new(ClaimTypes.Role, usuario.Role.ToString())
                 }),
                 Expires = DateTime.Now.AddDays(1),
                 SigningCredentials = new SigningCredentials(
