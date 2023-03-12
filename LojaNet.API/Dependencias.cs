@@ -9,10 +9,10 @@ namespace LojaNet.API
         {
             services.AddScoped<TokenHelper>();
 
-            services.AddScoped<IUsuarioData, UsuarioBLL>();
-            services.AddScoped<IProdutoData, ProdutoBLL>();
-            services.AddScoped<IPedidoData, PedidoBLL>();
-            services.AddScoped<IPedidoItemData, PedidoItemBLL>();
+            services.AddScoped<UsuarioBLL>();
+            services.AddScoped<ProdutoBLL>();
+            services.AddScoped<PedidoBLL>();
+            services.AddScoped<PedidoItemBLL>();
         }
     }
 }
