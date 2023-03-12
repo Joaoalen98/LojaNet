@@ -50,6 +50,13 @@ namespace LojaNet.BLL
                 entidade.Id = Guid.NewGuid().ToString();
             }
 
+            var usuarioExistente = ObterPorEmail(entidade.Email);
+            if (usuarioExistente != null)
+            {
+                throw new ApplicationException("Email já cadastrado");
+            }
+
+            entidade.Senha = HashHelper.HashSenha(entidade.Senha);
             return _dal.Criar(entidade);
         }
 
