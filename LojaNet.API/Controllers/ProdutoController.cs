@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LojaNet.API.Controllers
 {
     [Authorize]
+    [ProducesResponseType(401)]
     [Route("api/[controller]")]
     [ApiController]
     public class ProdutoController : ControllerBase
@@ -19,6 +20,7 @@ namespace LojaNet.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Produto>), 200)]
         public IActionResult ObterTodos()
         {
             var produtos = _produtoBLL.ObterTodos(null);
@@ -27,6 +29,9 @@ namespace LojaNet.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [ProducesResponseType(typeof(Produto), 200)]
+        [ProducesResponseType(typeof(ErroViewModel), 400)]
+        [ProducesResponseType(typeof(ErroViewModel), 500)]
         public IActionResult ObterPorId([FromRoute] string id)
         {
             if (ModelState.IsValid)
@@ -51,6 +56,9 @@ namespace LojaNet.API.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Funcionario,Administrador")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(ErroViewModel), 400)]
+        [ProducesResponseType(typeof(ErroViewModel), 500)]
         public IActionResult Criar([FromBody] ProdutoCriarViewModel model)
         {
             if (ModelState.IsValid)
@@ -82,6 +90,9 @@ namespace LojaNet.API.Controllers
         [HttpPut]
         [Route("{id}")]
         [Authorize(Roles = "Funcionario,Administrador")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErroViewModel), 400)]
+        [ProducesResponseType(typeof(ErroViewModel), 500)]
         public IActionResult Alterar([FromBody] ProdutoCriarViewModel model, [FromRoute] string id)
         {
             if (ModelState.IsValid)
@@ -114,6 +125,9 @@ namespace LojaNet.API.Controllers
         [HttpDelete]
         [Route("{id}")]
         [Authorize(Roles = "Administrador")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErroViewModel), 400)]
+        [ProducesResponseType(typeof(ErroViewModel), 500)]
         public IActionResult Deletar([FromRoute] string id)
         {
             if (ModelState.IsValid)

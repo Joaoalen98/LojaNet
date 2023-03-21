@@ -21,6 +21,9 @@ namespace LojaNet.API.Controllers
 
         [HttpPost]
         [Route("criar")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(ErroViewModel), 400)]
+        [ProducesResponseType(typeof(ErroViewModel), 500)]
         public IActionResult Criar([FromBody] UsuarioCriarViewModel model)
         {
             if (ModelState.IsValid)
@@ -39,11 +42,11 @@ namespace LojaNet.API.Controllers
                 }
                 catch (ApplicationException ex)
                 {
-                    return StatusCode(400, new { erro = ex.Message });
+                    return StatusCode(400, new ErroViewModel(ex.Message));
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode(500, new { erro = ex.Message });
+                    return StatusCode(500, new ErroViewModel(ex.Message, ex.StackTrace!));
                 }
             }
 
@@ -52,6 +55,9 @@ namespace LojaNet.API.Controllers
 
         [HttpPost]
         [Route("login")]
+        [ProducesResponseType(typeof(ResultadoLoginViewModel), 200)]
+        [ProducesResponseType(typeof(ErroViewModel), 400)]
+        [ProducesResponseType(typeof(ErroViewModel), 500)]
         public IActionResult Login([FromBody] UsuarioLoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -64,25 +70,15 @@ namespace LojaNet.API.Controllers
                     var token = _tokenHelper.GerarTokenUsuario(usuario);
 
                     usuario.Senha = null!;
-                    return Ok(new
-                    {
-                        Usuario = new
-                        {
-                            usuario.Nome,
-                            usuario.Email,
-                            usuario.Telefone,
-                            Role = usuario.Role.ToString()
-                        },
-                        Token = token,
-                    });
+                    return Ok(new ResultadoLoginViewModel(usuario, token));
                 }
                 catch (ApplicationException ex)
                 {
-                    return StatusCode(400, new { erro = ex.Message });
+                    return StatusCode(400, new ErroViewModel(ex.Message));
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode(500, new { erro = ex.Message });
+                    return StatusCode(500, new ErroViewModel(ex.Message, ex.StackTrace!));
                 }
             }
 
@@ -91,17 +87,14 @@ namespace LojaNet.API.Controllers
 
         [HttpGet]
         [Authorize]
+        [ProducesResponseType(typeof(Usuario), 200)]
+        [ProducesResponseType(401)]
         public IActionResult Dados()
         {
             var usuarioId = User.FindFirst("Id")!.Value;
             var usuario = _bllUsuario.ObterPorId(usuarioId);
-            return Ok(new
-            {
-                usuario.Nome,
-                usuario.Email,
-                usuario.Telefone,
-                Role = usuario.Role.ToString()
-            });
+            usuario.Senha = null!;
+            return Ok(usuario);
         }
     }
 }

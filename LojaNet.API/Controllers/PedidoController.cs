@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LojaNet.API.Controllers
 {
     [Authorize]
+    [ProducesResponseType(401)]
     [Route("api/[controller]")]
     [ApiController]
     public class PedidoController : ControllerBase
@@ -22,24 +23,28 @@ namespace LojaNet.API.Controllers
 
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Pedido>), 200)]
         public IActionResult ObterTodos([FromQuery] bool items = false)
         {
             var usuarioId = User.FindFirst("Id")!.Value;
-            var produtos = _pedidoBLL.ObterTodos(usuarioId);
+            var pedidos = _pedidoBLL.ObterTodos(usuarioId);
 
             if (items)
             {
-                foreach (var produto in produtos)
+                foreach (var pedido in pedidos)
                 {
-                    produto.PedidoItems = _pedidoItemBLL.ObterPorPedido(produto.Id).ToList();
+                    pedido.PedidoItems = _pedidoItemBLL.ObterPorPedido(pedido.Id).ToList();
                 }
             }
 
-            return Ok(produtos);
+            return Ok(pedidos);
         }
 
         [HttpGet]
         [Route("{id}")]
+        [ProducesResponseType(typeof(Pedido), 200)]
+        [ProducesResponseType(typeof(ErroViewModel), 400)]
+        [ProducesResponseType(typeof(ErroViewModel), 500)]
         public IActionResult ObterPorId([FromRoute] string id, [FromQuery] bool items = false)
         {
             if (ModelState.IsValid)
@@ -56,11 +61,11 @@ namespace LojaNet.API.Controllers
                 }
                 catch (ApplicationException ex)
                 {
-                    return StatusCode(400, new { erro = ex.Message });
+                    return StatusCode(400, new ErroViewModel(ex.Message));
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode(500, new { erro = ex.Message });
+                    return StatusCode(500, new ErroViewModel(ex.Message, ex.StackTrace!));
                 }
             }
 
@@ -68,6 +73,9 @@ namespace LojaNet.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(ErroViewModel), 400)]
+        [ProducesResponseType(typeof(ErroViewModel), 500)]
         public IActionResult Criar([FromBody] PedidoCriarViewModel model)
         {
             try
@@ -107,6 +115,9 @@ namespace LojaNet.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErroViewModel), 400)]
+        [ProducesResponseType(typeof(ErroViewModel), 500)]
         public IActionResult Deletar([FromRoute] string id)
         {
             if (ModelState.IsValid)
